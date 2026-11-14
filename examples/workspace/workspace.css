@@ -1,0 +1,9 @@
+.nav-icon,.nav-chevron{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.7;flex-shrink:0}
+.demo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.demo-card{padding:28px;border:1px solid var(--line);border-radius:18px;background:var(--surface);min-width:0}
+.demo-card p{font-size:14px;margin:16px 0;line-height:1.7}
+.demo-actions{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0}
+.demo-card label{margin:22px 0}.demo-card .sort-picker{max-width:200px;margin-left:0}
+button[aria-pressed=true]{background:var(--soft);border-color:var(--accent)}
+.profile-actions{padding:6px}.profile-actions button{display:block;width:100%}
+@media(max-width:760px){.app{display:block}.sidebar{position:relative;width:auto;padding:20px;border-bottom:1px solid var(--line)}.sidebar nav{display:flex;flex-wrap:wrap}.sidebar .sidebar-header{padding-right:0}.sidebar .brand{height:auto}.sidebar-bottom{position:absolute;right:14px;top:12px}.sidebar-bottom .profile-identity{display:none}.sidebar-disclosure{width:100%}main{padding:26px 20px}.page-header{align-items:flex-start;gap:16px;flex-wrap:wrap}.page-header h1{font-size:34px}.page-header p{font-size:14px}.demo-grid{grid-template-columns:1fr}.demo-card{padding:22px}}

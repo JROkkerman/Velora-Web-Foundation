@@ -1,0 +1,19 @@
+{
+  "manifest_version": 1,
+  "module_api": 1,
+  "type": "web-module",
+  "id": "components",
+  "version": "0.1.0",
+  "dependencies": {
+    "core": 1
+  },
+  "styles": [
+    "controls.css",
+    "dialog.css",
+    "palette.css",
+    "motion.css",
+    "focus.css",
+    "menus.css"
+  ],
+  "scripts": []
+}

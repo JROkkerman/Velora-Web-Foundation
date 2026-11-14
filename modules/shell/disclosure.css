@@ -1,0 +1,11 @@
+/* Animate a navigation disclosure without interrupting the current page. */
+.sidebar nav .nav-chevron{width:15px;height:15px;margin-left:auto;transition:transform 240ms ease}
+[data-sidebar-disclosure][aria-expanded="true"] .nav-chevron{transform:rotate(90deg)}
+.sidebar-subnav.sidebar-disclosure{display:grid;grid-template-rows:0fr;margin:0;padding:0;border:0;opacity:0;transition:grid-template-rows 280ms ease,opacity 200ms ease}
+.sidebar-subnav.sidebar-disclosure.expanded{grid-template-rows:1fr;opacity:1}
+.sidebar-subnav-inner{min-height:0;overflow:hidden;padding:0 0 0 39px;position:relative}
+.sidebar-subnav-inner::before{content:"";position:absolute;left:25px;top:0;bottom:12px;border-left:1px solid var(--line)}
+.sidebar nav .sidebar-subnav-inner>a{font-size:12px;margin:0 0 3px;padding:9px 12px;border-radius:12px;white-space:nowrap}
+.sidebar nav .sidebar-subnav-inner>a:last-child{margin-bottom:12px}
+@media(max-width:760px){.sidebar-subnav-inner{padding-left:10px}.sidebar-subnav-inner::before{left:0}.sidebar nav .sidebar-subnav-inner>a{font-size:11px;padding:7px 10px}}
+@media(prefers-reduced-motion:reduce){.sidebar-subnav.sidebar-disclosure,.sidebar nav .nav-chevron{transition:none}}

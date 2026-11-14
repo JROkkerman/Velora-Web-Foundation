@@ -1,0 +1,12 @@
+:root { color-scheme: light; }
+body { background: var(--paper); }
+.primary, .chip.active { color: var(--primary-text); }
+.primary:hover:not(:disabled) { background: var(--primary-hover); }
+nav a { color: var(--nav-text); }
+nav a > span, .nav-icon { color: var(--nav-icon); }
+nav a:hover { background: var(--nav-hover); }
+nav a.active { color: var(--selected-text); }
+nav a.active .nav-icon { color: var(--accent); }
+.search { background: var(--search-surface); }
+.search > span { color: var(--search-icon); }
+.avatar { background: var(--avatar-surface); color: var(--avatar-text); }

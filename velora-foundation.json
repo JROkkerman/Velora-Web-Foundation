@@ -1,0 +1,31 @@
+{
+  "manifest_version": 1,
+  "foundation_api": 1,
+  "type": "web-foundation",
+  "id": "velora-web-foundation",
+  "name": "Velora Web Foundation",
+  "version": "0.1.0",
+  "modules": [
+    "core",
+    "components",
+    "appearance",
+    "shell"
+  ],
+  "style_order": [
+    "core/base.css",
+    "components/controls.css",
+    "shell/layout.css",
+    "components/dialog.css",
+    "components/palette.css",
+    "core/appearance.css",
+    "appearance/settings.css",
+    "shell/profile-menu.css",
+    "components/menus.css",
+    "appearance/fonts.css",
+    "components/motion.css",
+    "components/focus.css",
+    "appearance/pickers.css",
+    "shell/disclosure.css",
+    "shell/sidebar.css"
+  ]
+}

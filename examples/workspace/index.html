@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ffffff"><title>Velora Foundation · Workspace</title>
+<script src="assets/foundation.js"></script>
+<script>
+const theme=window.VeloraFoundation.use('appearance').createTheme({storageKey:'velora-foundation-demo-appearance'});
+const font=window.VeloraFoundation.use('fonts').create();
+</script>
+<link rel="stylesheet" href="assets/foundation.css"><link rel="stylesheet" href="workspace.css">
+</head>
+<body>
+<div id="app" class="app">
+ <aside id="sidebar" class="sidebar">
+  <div class="sidebar-header"><a class="brand" href="#workspace"><span class="brand-name">Velora <span class="brand-product">Workspace</span></span></a></div>
+  <nav aria-label="Main navigation">
+   <a class="active" href="#workspace" aria-label="Overview"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v11h-6v-7H9v7H3z"/></svg><span class="nav-label">Overview</span></a>
+   <a id="workspace-toggle" href="#documents" role="button" aria-expanded="false" aria-controls="workspace-pages" aria-label="Documents"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h10l4 4v14H5zM9 11h6M9 15h6"/></svg><span class="nav-label">Documents</span><svg class="nav-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></a>
+   <div id="workspace-pages" class="sidebar-subnav sidebar-disclosure" inert><div class="sidebar-subnav-inner"><a href="#recent">Recent</a><a href="#archive">Archive</a></div></div>
+  </nav>
+  <div class="sidebar-bottom"><details id="profile" class="profile-dropdown"><summary class="profile" aria-label="Profile"><span class="avatar">J</span><span class="profile-identity">@Jarik</span><span class="profile-chevron">⋮</span></summary><div class="profile-actions"><button id="sidebar-toggle" class="sidebar-toggle"><span class="sidebar-toggle-label">Collapse sidebar</span></button></div></details></div>
+ </aside>
+ <main>
+  <header class="page-header"><div><h1>Workspace</h1><p class="muted">A familiar place for a different purpose.</p></div><button class="primary" id="new-document">New document</button></header>
+  <div class="demo-grid">
+   <section class="demo-card"><h2>Your overview</h2><p class="muted">The foundation supplies the shared interface. This app supplies its own content and actions.</p><div class="demo-actions"><button class="primary">Open workspace</button><button>Manage folders</button></div></section>
+   <section class="demo-card"><h2>Appearance</h2><p class="muted">Light, Dark and Device work without any theme plugins.</p><div class="demo-actions" id="appearance"><button data-theme-choice="light">Light</button><button data-theme-choice="dark">Dark</button><button data-theme-choice="system">Device</button></div><label>Font<select id="font"></select></label></section>
+   <section class="demo-card"><h2>Reusable controls</h2><p class="muted">Forms and menus use the same colours, spacing and rounded corners.</p><label>Workspace name<input value="My workspace"></label><details class="sort-picker"><summary>Sort <span>Date added</span></summary><div class="sort-options"><button>Date added</button><button>Title</button></div></details></section>
+   <section class="demo-card"><h2>Installed modules</h2><p class="muted" id="modules"></p><p class="muted">No music catalog, player, account service or backend is required for this example.</p></section>
+  </div>
+ </main>
+</div>
+<dialog id="document-dialog"><form method="dialog"><h2>New document</h2><label>Title<input autofocus required></label><div class="demo-actions"><button value="cancel" formnovalidate>Cancel</button><button class="primary" value="save">Create</button></div></form></dialog>
+<script>
+window.sidebar=window.VeloraFoundation.use('shell').mountSidebar({app:document.querySelector('#app'),sidebar:document.querySelector('#sidebar'),toggle:document.querySelector('#sidebar-toggle'),profile:document.querySelector('#profile'),storageKey:'velora-foundation-demo-sidebar',groups:[{trigger:document.querySelector('#workspace-toggle'),panel:document.querySelector('#workspace-pages')}]});
+document.querySelector('#appearance').addEventListener('click',event=>{const button=event.target.closest('[data-theme-choice]');if(button){theme.set(button.dataset.themeChoice);theme.remember(theme.get());}});
+document.querySelector('#font').innerHTML=font.choices.map(item=>`<option value="${item.id}">${item.name}</option>`).join('');
+document.querySelector('#font').addEventListener('change',event=>font.set(event.target.value));
+document.querySelector('#modules').textContent=window.VeloraFoundation.installed().join(' · ');
+document.querySelector('#new-document').addEventListener('click',()=>document.querySelector('#document-dialog').showModal());
+</script>
+</body>
+</html>

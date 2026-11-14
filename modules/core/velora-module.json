@@ -1,0 +1,15 @@
+{
+  "manifest_version": 1,
+  "module_api": 1,
+  "type": "web-module",
+  "id": "core",
+  "version": "0.1.0",
+  "dependencies": {},
+  "styles": [
+    "base.css",
+    "appearance.css"
+  ],
+  "scripts": [
+    "runtime.js"
+  ]
+}

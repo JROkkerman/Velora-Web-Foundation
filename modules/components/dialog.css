@@ -1,0 +1,7 @@
+dialog { background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 14px; padding: 28px; width: min(480px, 90vw); }
+dialog::backdrop { background: rgba(25, 32, 43, 0.4); }
+dialog h2 { margin-bottom: 12px; }
+dialog label { margin-top: 20px; }
+dialog p { font-size: 13px; margin-top: 15px; }
+dialog > .primary { margin-top: 20px; }
+.dialog-close { float: right; padding: 0px; }

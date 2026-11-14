@@ -1,0 +1,23 @@
+.theme-compact{display:grid;grid-template-columns:220px minmax(0,1fr);gap:26px;align-items:center;max-width:720px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.theme-compact>.theme-miniature{border-radius:12px;border:1px solid var(--line)}
+.theme-picker{margin:0;min-width:0;max-width:340px;width:100%}
+.theme-picker summary{font-size:15px;padding:12px 14px}
+.theme-picker .sort-options{width:100%;min-width:240px;padding:8px}
+.theme-picker input{margin-bottom:8px}
+.theme-picker-list{max-height:270px;overflow-y:auto;overscroll-behavior:contain}
+.theme-picker-list button{gap:12px;padding:10px;font-size:13px}
+.theme-picker-list button[hidden]{display:none}
+.theme-swatches{display:flex;gap:3px;margin-left:auto}
+.theme-swatches i{width:13px;height:13px;border-radius:50%;background:var(--mini-paper);border:1px solid var(--mini-line)}
+.theme-swatches i:nth-child(2){background:var(--mini-surface)}.theme-swatches i:nth-child(3){background:var(--mini-accent)}
+.theme-choice-check{width:12px;color:var(--accent);visibility:hidden}.theme-picker-list button[aria-pressed="true"] .theme-choice-check{visibility:visible}
+.theme-compact-description{font-size:13px;line-height:1.6;color:var(--muted);margin-top:12px}
+@media(max-width:560px){.theme-compact{grid-template-columns:1fr;gap:16px}.theme-compact>.theme-miniature{display:none}.theme-picker{max-width:none}}
+
+.font-compact{display:grid;grid-template-columns:220px minmax(0,1fr);align-items:center;gap:26px;max-width:720px;padding:20px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.font-current-preview{display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:12px;background:var(--soft);min-width:0}
+.font-current-preview>span{font-size:42px;line-height:1.1;color:var(--accent)}.font-current-preview>strong{font-size:17px;font-weight:500}.font-current-preview>small{font-size:11px;color:var(--muted)}
+.font-picker{margin:0;width:100%;min-width:0;max-width:340px}.font-picker summary{padding:12px 14px;font-size:15px}.font-picker .sort-options{width:100%;min-width:240px;padding:8px}.font-picker input{margin-bottom:8px}
+.font-picker-list{max-height:270px;overflow-y:auto;overscroll-behavior:contain}.font-picker-list button{padding:10px;gap:12px;font-size:13px}.font-picker-list button[hidden]{display:none}
+.font-choice-sample{margin-left:auto;font-size:22px;line-height:1;color:var(--accent)}.font-choice-check{width:12px;visibility:hidden;color:var(--accent)}.font-picker-list button[aria-pressed="true"] .font-choice-check{visibility:visible}
+@media(max-width:560px){.font-compact{grid-template-columns:1fr;gap:16px}.font-current-preview{flex-direction:row;align-items:center;flex-wrap:wrap}.font-current-preview>span{font-size:32px}.font-picker{max-width:none}}

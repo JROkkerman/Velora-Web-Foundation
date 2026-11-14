@@ -1,0 +1,26 @@
+/* Standard appearance is neutral; named palettes retain their own colours. */
+:root[data-appearance="light"] {
+  color-scheme: light;
+  --paper: #ffffff; --surface: #f7f7f7; --ink: #171717; --muted: #6b6b6b;
+  --accent: #171717; --line: #e2e2e2; --soft: #eeeeee; --green: #28733f;
+  --primary-text: #ffffff; --primary-hover: #363636; --player-surface: #fffffff5;
+  --nav-text: #505050; --nav-icon: #505050; --nav-hover: #eeeeee; --selected-text: #171717;
+  --cover-surface: #eeeeee; --avatar-surface: #e5e5e5; --avatar-text: #363636;
+  --badge-surface: #eeeeee; --badge-text: #505050; --badge-overlay: #ffffffed;
+  --fact-text: #505050; --star: #777777; --unavailable: #777777; --summary: #f2f2f2;
+  --search-surface: #ffffff55; --search-icon: #171717; --player-art-surface: #eeeeee;
+  --player-glow: #e2e2e2; --toast-surface: #171717; --toast-text: #ffffff;
+}
+:root[data-appearance="dark"] {
+  color-scheme: dark;
+  --paper: #000000; --surface: #151515; --ink: #f5f5f5; --muted: #a3a3a3;
+  --accent: #f5f5f5; --line: #303030; --soft: #232323; --green: #8fc59b;
+  --primary-text: #101010; --primary-hover: #d4d4d4; --player-surface: #151515f5;
+  --nav-text: #bdbdbd; --nav-icon: #bdbdbd; --nav-hover: #232323; --selected-text: #ffffff;
+  --cover-surface: #232323; --avatar-surface: #303030; --avatar-text: #eeeeee;
+  --badge-surface: #232323; --badge-text: #d4d4d4; --badge-overlay: #151515ed;
+  --fact-text: #d4d4d4; --star: #a3a3a3; --unavailable: #a3a3a3; --summary: #1b1b1b;
+  --search-surface: #15151580; --search-icon: #f5f5f5; --player-art-surface: #232323;
+  --player-glow: #282828; --toast-surface: #f5f5f5; --toast-text: #101010;
+}
+:root[data-appearance="dark"] { --error:#ffb4a5; --feedback-error:#ffb4a5; }

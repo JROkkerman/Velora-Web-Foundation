@@ -1,0 +1,20 @@
+{
+  "manifest_version": 1,
+  "module_api": 1,
+  "type": "web-module",
+  "id": "shell",
+  "version": "0.1.0",
+  "dependencies": {
+    "core": 1,
+    "components": 1
+  },
+  "styles": [
+    "layout.css",
+    "profile-menu.css",
+    "disclosure.css",
+    "sidebar.css"
+  ],
+  "scripts": [
+    "sidebar.js"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "@velora/web-foundation",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared, modular frontend foundation for Velora applications",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "build:demo": "node tools/build-demo.mjs"
+  },
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JROkkerman/Velora-Web-Foundation.git"
+  }
+}
