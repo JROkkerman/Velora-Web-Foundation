@@ -1,0 +1,22 @@
+{
+  "manifest_version": 1,
+  "module_api": 1,
+  "type": "web-module",
+  "id": "identity",
+  "version": "0.1.0",
+  "dependencies": {
+    "core": 1,
+    "components": 1
+  },
+  "styles": [
+    "login.css",
+    "profile.css",
+    "profile-settings.css",
+    "profile-picker.css",
+    "name-fields.css",
+    "account.css"
+  ],
+  "scripts": [
+    "identity.js"
+  ]
+}

@@ -1,0 +1,9 @@
+.identity-login { min-height: 100vh; display: grid; place-items: center; padding: 25px; }
+.identity-login-card { width: 100%; max-width: 390px; }
+.identity-login-card h1 { font-size: 31px; letter-spacing: -1px; }
+.identity-login-card p { margin: 12px 0px 28px; font-size: 14px; }
+.identity-login-logo { width: 52px; height: 52px; margin-bottom: 23px; }
+.identity-login-card label { margin-bottom: 18px; }
+.identity-login-card button { width: 100%; margin-top: 7px; padding: 12px; }
+.identity-login-card button span { float: right; }
+.identity-login-card .error { font-size: 13px; }

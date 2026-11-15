@@ -4,7 +4,7 @@
   const modules = new Map([['core', {api:1, exports:{}}]]);
   const foundation = {
     api:1,
-    version:'0.1.0',
+    version:'0.2.0',
     define(id, api, dependencies, create) {
       if(api !== 1) throw new Error(`Unsupported Velora module API: ${id}`);
       if(modules.has(id)) throw new Error(`Duplicate Velora module: ${id}`);

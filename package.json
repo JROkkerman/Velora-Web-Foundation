@@ -1,6 +1,6 @@
 {
   "name": "@velora/web-foundation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "description": "Shared, modular frontend foundation for Velora applications",
@@ -9,7 +9,9 @@
   },
   "scripts": {
     "test": "node --test tests/*.test.mjs",
-    "build:demo": "node tools/build-demo.mjs"
+    "build:demo": "node tools/build-demo.mjs",
+    "update:apps": "node tools/update.mjs --all",
+    "update:check": "node tools/update.mjs --all --check"
   },
   "license": "UNLICENSED",
   "repository": {

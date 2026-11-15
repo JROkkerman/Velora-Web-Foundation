@@ -1,4 +1,4 @@
-import {readFile, realpath, stat} from 'node:fs/promises';
+import {readFile, realpath, stat, lstat, readdir} from 'node:fs/promises';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
 
@@ -49,17 +49,33 @@ export async function inspectPackage(root, selected=['core','components','appear
   return {manifest,modules:ordered,files};
 }
 
-export async function createLock(root, selected, source={kind:'local-release'}) {
+export async function createLock(root, selected, source={kind:'local-release'}, {lockVersion=2}={}) {
   const pkg=await inspectPackage(root,selected);
   const files=Object.fromEntries(Object.entries(pkg.files).sort().map(([name,content])=>[name,digest(content)]));
   // Include the build tooling and license in the integrity pin as well.
   for(const name of ['tools/build.mjs','LICENSE']) files[name]=digest(await safeRead(root,name));
-  return {lock_version:1,foundation_api:1,version:pkg.manifest.version,source,modules:selected,files};
+  if(lockVersion===2) {
+    // Pin all build/update helpers so future releases can add tooling without a copier change.
+    async function include(name) {
+      const entry=await lstat(path.join(root,name));
+      if(entry.isSymbolicLink())throw new Error(`Symlink in package tooling: ${name}`);
+      if(entry.isDirectory()) {
+        for(const child of (await readdir(path.join(root,name))).sort()) {
+          if(!child.startsWith('.'))await include(`${name}/${child}`);
+        }
+      } else if(entry.isFile())files[name]=digest(await safeRead(root,name));
+      else throw new Error(`Unsupported package tooling: ${name}`);
+    }
+    await include('tools');
+    try { await lstat(path.join(root,'README.md')); files['README.md']=digest(await safeRead(root,'README.md')); }
+    catch(error) { if(error.code!=='ENOENT')throw error; }
+  }
+  return {lock_version:lockVersion,foundation_api:1,version:pkg.manifest.version,source,modules:selected,files};
 }
 
 export async function verifyLock(root,lock) {
-  if(lock.lock_version!==1||lock.foundation_api!==1) throw new Error('Unsupported foundation lock');
-  const actual=await createLock(root,lock.modules,lock.source);
+  if(![1,2].includes(lock.lock_version)||lock.foundation_api!==1) throw new Error('Unsupported foundation lock');
+  const actual=await createLock(root,lock.modules,lock.source,{lockVersion:lock.lock_version});
   if(actual.version!==lock.version||JSON.stringify(Object.keys(actual.files).sort())!==JSON.stringify(Object.keys(lock.files||{}).sort())) throw new Error('Foundation lock does not match the installed package');
   for(const [name,hash] of Object.entries(actual.files)) if(lock.files[name]!==hash) throw new Error(`Foundation integrity mismatch: ${name}`);
 }

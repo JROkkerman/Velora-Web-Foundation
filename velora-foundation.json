@@ -4,12 +4,13 @@
   "type": "web-foundation",
   "id": "velora-web-foundation",
   "name": "Velora Web Foundation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "modules": [
     "core",
     "components",
     "appearance",
-    "shell"
+    "shell",
+    "identity"
   ],
   "style_order": [
     "core/base.css",
@@ -26,6 +27,13 @@
     "components/focus.css",
     "appearance/pickers.css",
     "shell/disclosure.css",
-    "shell/sidebar.css"
-  ]
+    "shell/sidebar.css",
+    "identity/login.css",
+    "identity/profile.css",
+    "identity/profile-settings.css",
+    "identity/profile-picker.css",
+    "identity/name-fields.css",
+    "identity/account.css"
+  ],
+  "lock_version": 2
 }

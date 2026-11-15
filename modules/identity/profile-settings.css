@@ -1,0 +1,27 @@
+/* Profile uses the same compact, themed surfaces as appearance settings. */
+.profile-page.profile-redesign{display:block;max-width:1080px}
+.profile-account-summary{display:flex;align-items:center;gap:20px;padding:24px 28px;margin-bottom:24px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
+.profile-redesign .profile-page-identity{border:0;padding:0;margin:0;min-width:0;gap:16px}
+.profile-redesign .profile-page-identity .avatar{width:56px;height:56px;border-radius:16px;background:var(--soft);color:var(--accent);flex-shrink:0}
+.profile-redesign .profile-page-identity h2{font-size:21px;line-height:1.4;overflow-wrap:anywhere}
+.profile-role-label{font-size:11px;color:var(--accent);background:var(--soft);border:1px solid var(--line);border-radius:30px;padding:7px 11px;white-space:nowrap}
+.profile-settings-link{margin-left:auto;display:flex;align-items:center;gap:16px;border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:12px}
+.profile-settings-link:hover{background:var(--soft);color:var(--accent)}
+.profile-form-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:24px;align-items:start}
+.profile-redesign .profile-panel{padding:26px;border-radius:18px;min-width:0}
+.profile-section-heading{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.profile-section-icon{display:grid;place-items:center;width:42px;height:42px;flex-shrink:0;border-radius:12px;background:var(--soft);color:var(--accent)}
+.profile-section-icon svg{width:22px;height:22px}
+.profile-section-heading h2{font-size:19px}.profile-redesign .profile-section-heading .muted{margin-top:4px;font-size:12px}
+.profile-redesign label{display:block;font-size:12px;margin-top:18px}.profile-redesign input{border-radius:12px;margin-top:8px;font-size:14px}
+.profile-account-detail{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:17px 0;margin-top:12px;border-bottom:1px solid var(--line);font-size:12px}
+.profile-account-detail>span{color:var(--muted)}.profile-account-detail strong{font-weight:500;overflow-wrap:anywhere}
+.profile-password-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.profile-field-note{font-size:11px;color:var(--muted);line-height:1.7;margin-top:14px}
+.profile-form-footer{display:flex;flex-direction:column;align-items:flex-start;margin-top:20px}.profile-redesign .profile-form-footer .form-feedback{margin:0}.profile-redesign .profile-form-footer .form-feedback:empty{display:none}
+.profile-redesign .profile-form-footer .primary{margin-top:12px;border-radius:12px;min-height:40px}
+@media(max-width:900px){.profile-form-grid{grid-template-columns:1fr}.profile-password-fields{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.profile-account-summary{flex-wrap:wrap;gap:14px;padding:20px}.profile-account-summary .profile-page-identity{width:100%}.profile-redesign .profile-panel{padding:20px}.profile-password-fields{grid-template-columns:1fr;gap:0}}
+.profile-form-grid{align-items:stretch}
+.profile-redesign .profile-form-grid>.profile-panel{align-self:stretch;display:flex;flex-direction:column}
+.profile-redesign .profile-form-grid>.profile-panel>form{display:flex;flex-direction:column;flex:1}
+.profile-redesign .profile-form-footer{margin-top:auto;padding-top:20px}
