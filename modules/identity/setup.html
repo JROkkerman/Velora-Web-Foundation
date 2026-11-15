@@ -1,0 +1,13 @@
+<div id="setup" class="identity-login vf-setup"%HIDDEN%>
+  <form id="setup-form" class="identity-login-card" aria-labelledby="setup-heading"%FORM_ATTRIBUTES%>
+%CSRF%
+    <span class="home-eyebrow">WELCOME HOME</span>
+    <h1 id="setup-heading" aria-label="Make %PRODUCT% yours.">Make <span class="setup-brand"><svg class="velora-mark setup-heading-logo" viewBox="%LOGO_VIEWBOX%" aria-hidden="true" focusable="false"><use href="%LOGO_HREF%"></use></svg><span class="brand-name">Velora <span class="brand-product">%APP_NAME%</span></span></span> yours.</h1>
+    <p class="muted">Create your administrator account and first profile.</p>
+    <div class="person-name-fields"><label>Voornaam<input name="first_name" autocomplete="given-name" maxlength="100" value="%FIRST_NAME%" required></label><label>Tussenvoegsel<input name="name_prefix" autocomplete="off" maxlength="50" value="%NAME_PREFIX%"></label><label>Achternaam<input name="last_name" autocomplete="family-name" maxlength="100" value="%LAST_NAME%" required></label></div>
+    <label>Username<input name="username" autocomplete="username" pattern="[A-Za-z0-9_.-]+" maxlength="150" value="%USERNAME%" required></label>
+    <label>Password<input name="password" type="password" autocomplete="new-password" minlength="12" maxlength="1024" required></label>
+    <label>Confirm password<input name="confirm_password" type="password" autocomplete="new-password" minlength="12" maxlength="1024" required></label>
+    <button class="primary" type="submit">Create administrator account →</button><p id="setup-error" class="error" role="alert" aria-live="polite">%ERROR%</p>
+  </form>
+</div>

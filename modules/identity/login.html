@@ -1,0 +1,11 @@
+<div id="login" class="identity-login"%HIDDEN%>
+  <form id="login-form" class="identity-login-card"%FORM_ATTRIBUTES%>
+%CSRF%
+    <h1 aria-label="Welcome to %PRODUCT%">Welcome to <span class="identity-login-brand"><svg class="velora-mark identity-login-logo" viewBox="%LOGO_VIEWBOX%" aria-hidden="true" focusable="false"><use href="%LOGO_HREF%"></use></svg><span class="brand-name">Velora <span class="brand-product">%APP_NAME%</span></span></span></h1>
+    <p class="muted">Sign in to your household, then choose your profile.</p>
+    <label>Household username<input name="username" autocomplete="username" maxlength="150" value="%USERNAME%" required></label>
+    <label>Password<input type="password" name="password" autocomplete="current-password" maxlength="1024" required></label>
+    <button class="primary" type="submit">Sign in <span aria-hidden="true">→</span></button>
+    <p id="login-error" class="error" role="alert">%ERROR%</p>
+  </form>
+</div>

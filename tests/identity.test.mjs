@@ -58,3 +58,36 @@ test('PIN dialogs clear secrets and restore focus on close; cancelled responses 
  const pin=identity.mountPinDialog({dialog,form,input,heading,status,cancel,onSubmit:(_,value,op)=>{assert.equal(value,'1234');operation=op;return new Promise(r=>resolve=r);}});
  pin.open({id:'x',name:'<Admin>'});assert(dialog.open);assert.equal(heading.textContent,'Enter PIN for <Admin>');assert.equal(doc.activeElement,input);input.value='1234';const pending=form.emit('submit');dialog.close();assert.equal(input.value,'');assert.equal(doc.activeElement,opener);assert(operation.signal.aborted);assert(!operation.isCurrent());resolve(true);await pending;assert(!dialog.open);pin.destroy();
 });
+
+test('household management renders escaped profiles, household credentials and independent roles',async()=>{
+ const {identity}=await fixture();
+ const html=identity.renderHouseholdManagement({items:[{id:'1',name:'<Admin>',first_name:'<Admin>',last_name:'Family',admin:true,active:true},{id:'2',name:'Member',admin:false,active:false,password_required:true}],currentId:'1',login:{username:'family" onfocus="bad'},description:'Private <receipts>'});
+ assert(html.includes('family-account-card'));assert(html.includes('Household login'));assert(html.includes('Password protected'));assert(html.includes('Disabled'));assert(!html.includes('<Admin>'));assert(!html.includes('<receipts>'));assert(!html.includes('onfocus="bad'));assert(html.includes('name="admin" disabled'));assert(html.includes('Member'));
+});
+test('migration unlock accepts an existing password then restores numeric PIN constraints',async()=>{
+ const {identity,node,form}=await fixture();const dialog=node('dialog'),input=node('input'),heading=node('h2'),status=node('p');
+ const pin=identity.mountPinDialog({dialog,form,input,heading,status,onSubmit:async()=>false});
+ pin.open({id:'x',name:'Family',password_required:true});assert.equal(input.maxLength,1024);assert.equal(input.inputMode,'text');assert.equal(input.autocomplete,'current-password');
+ pin.close();pin.open({id:'x',name:'Family',pin_set:true});assert.equal(input.maxLength,8);assert.equal(input.inputMode,'numeric');assert.equal(input.pattern,'[0-9]{4,8}');pin.destroy();
+});
+
+test('shared profile settings escape app values and never invent profile protection',async()=>{
+ const {identity}=await fixture();
+ const html=identity.renderProfileSettings({profile:{first_name:'"><img src=x onerror=alert(1)>',last_name:'A&B'},csrfToken:'"<&',extraFields:[{name:'company',type:'text',label:'<Company>',value:'"><script>bad()</script>'}]});
+ assert(!html.includes('<img'));assert(!html.includes('<script>'));assert(html.includes('&lt;Company&gt;'));
+ assert(html.includes('No PIN is set.'));assert(html.includes('class="current-pin-field" hidden'));assert(html.includes('name="csrfmiddlewaretoken"'));
+ const locked=identity.renderProfileSettings({profile:{pin_set:true}});assert(!locked.includes('class="current-pin-field" hidden'));assert(locked.includes('Your profile is protected with a PIN.'));
+ const legacy=identity.renderProfileSettings({profile:{password_required:true}});assert(legacy.includes('Current profile password'));assert(legacy.includes('autocomplete="current-password"'));
+ assert.throws(()=>identity.renderProfileSettings({extraFields:[{name:'pin',type:'text'}]}),/Invalid/);
+ assert.throws(()=>identity.renderProfileSettings({extraFields:[{name:'company',type:'html'}]}),/Unsupported/);
+});
+
+test('shared PIN settings reject mismatches, then clear secrets and update the lock state',async()=>{
+ const {identity,node,form}=await fixture();const root=node('div'),label=node('label'),labelText=node('span'),protection=node('p'),input=node('input');
+ form.matches=selector=>selector==='#profile-pin-settings-form';form.elements={current_pin:input};form.values={current_pin:'old',pin:'6824',confirm_pin:'0000'};
+ label.querySelector=()=>labelText;root.querySelector=()=>protection;form.querySelector=selector=>selector==='.current-pin-field'?label:form.feedback;
+ form.reset=()=>{for(const key of Object.keys(form.values))form.values[key]='';};let calls=0;
+ const mounted=identity.mountProfileSettings({root,savePin:async()=>{calls++;return {pin_set:false};}});
+ await root.emit('submit',{target:form});assert.equal(calls,0);assert.equal(form.feedback.textContent,'The PINs must match.');
+ form.values.confirm_pin='6824';await root.emit('submit',{target:form});assert.equal(calls,1);assert.equal(form.values.current_pin,'');assert(label.hidden);assert.equal(input.required,false);assert.equal(input.inputMode,'numeric');assert.match(protection.textContent,/No PIN is set/);mounted.destroy();
+});

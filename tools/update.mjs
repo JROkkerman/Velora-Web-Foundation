@@ -49,7 +49,7 @@ async function inspectApp(app,log){
     const config=await json(path.join(app,configPath));const lock=await json(path.join(app,lockPath));
     if(config.config_version!==1||config.foundation_api!==1)throw new Error(`Unsupported Foundation consumer configuration in ${app}`);
     if(!Array.isArray(config.outputs)||!config.outputs.length||new Set(config.outputs).size!==config.outputs.length)throw new Error('List the generated Foundation outputs in the consumer configuration.');
-    for(const output of config.outputs){relative(output);if(!output.startsWith('frontend/assets/'))throw new Error(`Generated output must be under frontend/assets/: ${output}`);await noSymlinks(app,output);}
+    for(const output of config.outputs){relative(output);if(!output.startsWith('frontend/assets/')&&output!=='frontend/index.html'&&!/^frontend\/templates\/foundation\/[^/]+\.html$/.test(output))throw new Error(`Unsupported generated frontend output: ${output}`);await noSymlinks(app,output);}
     command(config.build);if(!Array.isArray(config.checks)||!config.checks.length)throw new Error('The consumer must define verification checks.');config.checks.forEach(command);
     await verifyLock(path.join(app,vendor),lock);
     // Run existing checks first: a stale/hand-edited generated asset must not be silently replaced.

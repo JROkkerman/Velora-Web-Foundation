@@ -1,6 +1,6 @@
 # Velora Web Foundation
 
-A shared, modular interface for Velora web applications. Version **0.2.0**, foundation API **1**.
+A shared, modular interface for Velora web applications. Version **0.3.1**, foundation API **1**.
 
 Velora Music and Velora Receipts consume this package. This package is frontend JavaScript and CSS; it has no music catalog, playback, authentication server, database, Rust server or third-party runtime dependency.
 
@@ -134,7 +134,7 @@ Source: [JROkkerman/Velora-Web-Foundation](https://github.com/JROkkerman/Velora-
 
 ## Identity: login, profiles and personal settings
 
-The optional `identity` module (API 1) supplies shared login layouts, profile cards, profile/PIN settings styles and form behavior. Music uses the household profile picker; Receipts uses individual account forms. Apps keep their existing appearance and layouts. Nothing here grants access or stores credentials.
+The optional `identity` module (API 1) supplies shared login layouts, profile cards, profile/PIN settings styles and form behavior. Music and Receipts use the same household login, profile picker, add-profile dialog and family management screens. Product branding, app-specific actions and private-data descriptions come from adapters. Nothing here grants access or stores credentials.
 
 Add `"identity"` to `modules` in the application's `frontend/foundation.config.json`, then run the normal updater. This explicitly changes the selected modules in the integrity lock; other apps can omit identity. Existing consumers without a modules setting keep their lock selection.
 
@@ -161,4 +161,32 @@ const serverForms = identity.bindForms(document);
 
 Minimal login markup uses `identity-login`, `identity-login-card`, `identity-login-logo`; a panel composition uses `login-page`, `login-card`, `login-copy`. Profile settings use `profile-panel`, `profile-form-grid`, `profile-form-footer` and `person-name-fields`. Picker/PIN recipes use `profile-picker-grid`, `profile-choice`, `profile-pin-dialog` and `profile-pin-settings`. See Music and Receipts for both compositions. All colours use Foundation tokens. Music includes styles at existing cascade positions; Receipts uses the default Foundation bundle.
 
-**Application boundary:** Rust owns sessions, CSRF, passwords/PINs, rate limits, administrator checks, profile ownership and API calls. Shared frontend UI does not imply shared accounts or cross-application login. Receipts does not expose other users' profiles or bypass its account login.
+**Application boundary:** Rust owns sessions, CSRF, passwords/PINs, rate limits, administrator checks, profile ownership and API calls. Shared frontend UI does not imply shared accounts or cross-application login. A household session can list the household's profile names but must select/unlock a profile before accessing its data. Existing password-protected profiles must stay protected during migration.
+
+## Shared first-run setup
+
+The identity module owns `setup.html` and `setup.css`, based on Music's setup page. Both apps build this same page with `tools/setup.mjs`; branding supplies only `productName` and a local SVG `logo` (`href`, `viewBox`). The shared fields are first name, optional name prefix, last name, username, password and confirmation. The copy and layout are owned by Foundation.
+
+`renderSetup(packageRoot, {productName, logo, transport, hidden})` supports a static SPA form and a `minijinja` server form. The server adapter preserves CSRF, escaped non-secret values and validation errors. Passwords are never put back into HTML. Each backend validates names, usernames, matching passwords and the one-time administrator boundary. This does not add shared sessions between apps.
+
+Music's generated setup region in `frontend/index.html` and Receipts' `frontend/templates/foundation/setup.html` are verified build outputs, covered by the updater's backup and rollback alongside CSS and JavaScript. Do not edit these generated layouts in an app; update Foundation, then run the consumer updater and rebuild Docker.
+
+The setup heading includes the product symbol inline before Velora, with the app name in the smaller sidebar wordmark style. Name prefixes remain optional without an extra label; password rules are enforced by the inputs and backend rather than a note below the form.
+
+## Shared household flow (0.4.0)
+
+`tools/household.mjs` exports `renderHousehold(root, {productName, logo, transport, hidden, heading, eyebrow, actions, connectDevices})`. It renders the integrity-pinned `identity/login.html` and `identity/picker.html`. `transport` is `static` for Music and `minijinja` for Receipts; the latter keeps native POST, CSRF and escaped username/error feedback. `actions` is trusted build-time markup for app-specific management links, never user content. Apps generate these templates during the normal Foundation build and check them in CI.
+
+At runtime, use `mountAddProfile` for administrator-approved additions and `renderHouseholdManagement` + `mountHouseholdManagement` for the profile list, roles, access controls, creation and household credentials form. A request adapter receives `create`, `update` or `login` plus validated UI values; the server must revalidate every value and permission. Music retains its Library Management and connected-device actions. Receipts keeps declaration/export settings in its own profile page.
+
+`mountPinDialog` and `mountAddProfile` accept `password_required` to preserve old account passwords during an upgrade. New profiles use optional PINs. Closing dialogs clears secrets. Household sign-in and profile selection must rotate credentials, validate CSRF, throttle unlock attempts and invalidate affected sessions after security changes. Foundation provides no cross-app SSO: each application's household remains local to its own server and database.
+
+### Shared profile settings
+
+The identity module provides `renderProfileSettings` and `mountProfileSettings` for the same personal-details and optional-PIN page in every app. Apps supply profile values, request callbacks and optional structured fields (for example Receipts' company and email). Foundation owns the markup, styling, validation, busy states and feedback. A missing `saveDetails` callback preserves a native POST form with the supplied CSRF token. Credentials, authorization and data ownership remain in each backend.
+
+### Shared application settings and device connection
+
+The optional appearance module exports `settings.render({themeChoices,fontChoices,productName,fontSample,persistenceNote})` and `settings.mount({root,theme,font})`. Both apps use the same Light/Dark/Device cards, theme preview, searchable theme selector and font selector. The existing appearance/font controllers own state; each app owns persistence. Destroy the mount before replacing a single-page view. Music-specific player and home preferences remain in Music.
+
+Household pickers have no top-left branding. Pass `connectDevices: true` to `renderHousehold` for the shared connect-device button. `identity.renderConnectedDevices({productName})` supplies the common QR form and device list; each app supplies authorization, polling, cancellation and disconnect requests. Pairing must be administrator-approved, short-lived, single-use and leave the native client at profile selection. Foundation stores no pairing credentials.

@@ -43,6 +43,10 @@ export async function inspectPackage(root, selected=['core','components','appear
         files[assetPath]=await safeRead(root,assetPath);
       }
     }
+    for(const template of module.templates ?? []) {
+      if(typeof template!=='string'||!template.endsWith('.html'))throw new Error(`Invalid template: ${id}`);
+      const name=`modules/${id}/${template}`;files[name]=await safeRead(root,name);
+    }
     visiting.delete(id);seen.add(id);ordered.push(module);
   }
   for(const id of selected) await visit(id);

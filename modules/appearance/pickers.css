@@ -21,3 +21,21 @@
 .font-picker-list{max-height:270px;overflow-y:auto;overscroll-behavior:contain}.font-picker-list button{padding:10px;gap:12px;font-size:13px}.font-picker-list button[hidden]{display:none}
 .font-choice-sample{margin-left:auto;font-size:22px;line-height:1;color:var(--accent)}.font-choice-check{width:12px;visibility:hidden;color:var(--accent)}.font-picker-list button[aria-pressed="true"] .font-choice-check{visibility:visible}
 @media(max-width:560px){.font-compact{grid-template-columns:1fr;gap:16px}.font-current-preview{flex-direction:row;align-items:center;flex-wrap:wrap}.font-current-preview>span{font-size:32px}.font-picker{max-width:none}}
+
+/* Keep the same geometry in apps with different base typography. */
+.vf-settings{font-size:16px;line-height:normal;color:var(--ink)}
+.vf-settings .settings-section-heading{margin-bottom:24px}
+.vf-settings .settings-section-heading h2{margin:0 0 8px;font-size:27px;font-weight:650;letter-spacing:-.7px}
+.vf-settings .settings-section-heading p{margin:0;font-size:13px;line-height:1.7;color:var(--muted)}
+.vf-settings .appearance-option{border:1px solid var(--line);font:inherit;color:var(--ink)}
+.vf-settings .appearance-option[aria-pressed="true"]{border-color:var(--accent)}
+.vf-settings .theme-settings,.vf-settings .font-settings{margin-top:38px}
+.vf-settings .theme-compact,.vf-settings .font-compact{padding:20px;gap:26px}
+.vf-settings .theme-picker .sort-options,.vf-settings .font-picker .sort-options{min-width:0}
+.vf-settings .sort-options button{width:100%;display:flex;align-items:center;text-align:left;border:0;background:transparent;color:var(--ink);font:inherit;font-size:13px}
+.vf-settings .sort-options button:hover{background:var(--soft)}
+.vf-settings .sort-options button[hidden]{display:none}
+.vf-settings .sort-options input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+
+.vf-settings .theme-compact,.vf-settings .font-compact{max-width:720px}
+.vf-settings .sort-picker summary{border-radius:12px}

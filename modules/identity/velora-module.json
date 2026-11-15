@@ -3,7 +3,7 @@
   "module_api": 1,
   "type": "web-module",
   "id": "identity",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "dependencies": {
     "core": 1,
     "components": 1
@@ -14,9 +14,17 @@
     "profile-settings.css",
     "profile-picker.css",
     "name-fields.css",
-    "account.css"
+    "account.css",
+    "setup.css",
+    "household.css",
+    "devices.css"
   ],
   "scripts": [
     "identity.js"
+  ],
+  "templates": [
+    "setup.html",
+    "login.html",
+    "picker.html"
   ]
 }

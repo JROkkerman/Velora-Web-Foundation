@@ -3,7 +3,7 @@
   "module_api": 1,
   "type": "web-module",
   "id": "appearance",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "dependencies": {
     "core": 1,
     "components": 1
@@ -15,6 +15,7 @@
   ],
   "scripts": [
     "theme.js",
-    "fonts.js"
+    "fonts.js",
+    "settings.js"
   ]
 }
